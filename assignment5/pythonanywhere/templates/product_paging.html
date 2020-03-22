@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+  {% for KPL in kpl.items %}
+       {% if loop.index == 1 %}{% set counter = ( counter | default(1) ) %}{% endif %}
+        {% if counter == 1 %}<div class="row">{% endif %}
+        <div class="col-md-4">
+          <div class="thumbnail">
+              <p>Col#:{{ loop.index }}<br>Team ID:{{ KPL.teamID }}<br>Team:{{ KPL.team }}<br>Area:{{ KPL.area }}<br>Line_members:{{ KPL.lineup_members }}<br>Schedules:{{ KPL.schedules }}</p>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                </div>
+          </div>
+        </div> 
+       {% if counter == 3 %}</div><!--end row-->{%  set counter = ( counter | default(1) ) %}{% else %}{% set counter = ( counter | default(0) ) + 1 %}{% endif %}
+  {% endfor %}
+  <div class="container" style="float: left;">
+  {% for page in kpl.iter_pages() %}  
+    {% if page %}
+        <a href="{{url_for('album')}}/{{ page }}">{{ page }}</a>
+    {% else %}
+        ...
+    {% endif %}
+  {% endfor %}  
+  </div>
+{% endblock %}
